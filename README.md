@@ -11,3 +11,7 @@ Dự án được thực hiện theo các phương pháp nghiên cứu khoa họ
 
 ## **Đề cương đề tài**
 https://docs.google.com/document/d/1mwllzgKaZaFJWuPMsWScaA3aB4CY0gVi24sI6a_11Jw/edit?usp=sharing
+
+## **Phương pháp nghiên cứu**
+- Hồi quy logistic
+- Phân tích phân biệt
