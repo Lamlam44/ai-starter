@@ -1,5 +1,5 @@
 ## **Giới thiệu dự án**
-### **Phân tích và đánh giá rủi ro tín dụng với German Credit Dataset**
+### **1. Phân tích và đánh giá rủi ro tín dụng với German Credit Dataset**
 Tín dụng là một yếu tố quan trọng trong nền kinh tế, giúp các cá nhân và doanh nghiệp tiếp cận nguồn vốn để phát triển. Tuy nhiên, các tổ chức tài chính phải đối mặt với rủi ro tín dụng – nguy cơ khách hàng không thể hoàn trả khoản vay. Để giảm thiểu rủi ro này, các ngân hàng và tổ chức tài chính sử dụng các mô hình phân tích dữ liệu để đánh giá khả năng trả nợ của khách hàng.
 
 Dự án này sử dụng **German Credit Dataset** (german.csv), một tập dữ liệu phổ biến trong lĩnh vực phân tích rủi ro tín dụng. Mục tiêu của dự án là:
@@ -14,7 +14,6 @@ Dự án được thực hiện theo các phương pháp nghiên cứu khoa họ
 ## **Đề cương đề tài**
 https://docs.google.com/document/d/1mwllzgKaZaFJWuPMsWScaA3aB4CY0gVi24sI6a_11Jw/edit?usp=sharing
 
-## **Phương pháp nghiên cứu**
-- Hồi quy logistic
-- Phân tích phân biệt
+## **Báo cáo đề tài**
+https://docs.google.com/document/d/1onQJ3sDFB7hqoVTcb14ZJ8Wtt5jucH7X_gqfGt3roEk/edit?tab=t.bxllhzhdx401
 
