@@ -31,7 +31,7 @@ Dự án này sử dụng **German Credit Dataset** (german.csv), một tập d�
 
 Dự án được thực hiện theo các phương pháp nghiên cứu khoa học, bao gồm khảo sát tài liệu, tiền xử lý dữ liệu, áp dụng mô hình máy học và đánh giá kết quả.
 #### Input: German Credit Dataset
-#### Output: Kết quả đánh giá rủi ro tín dụng
+#### Output: Mô hình phân loại rủi ro tín dụng
 
 ### 2. Mô hình đánh giá rủi ro tín dụng
 - **Mô hình Rừng Ngẫu Nhiên** là một thuật toán học ансамбль (ensemble learning), có nghĩa là nó kết hợp dự đoán của nhiều mô hình học máy yếu hơn (trong trường hợp này là các cây quyết định) để tạo ra một mô hình mạnh mẽ và chính xác hơn.
