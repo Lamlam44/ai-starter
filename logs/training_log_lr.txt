@@ -1,0 +1,16 @@
+--- Báo cáo Huấn luyện Mô hình Logistic Regression ---
+
+Accuracy: 0.75
+Confusion Matrix:
+[[ 31  59]
+ [ 17 193]]
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.65      0.34      0.45        90
+           1       0.77      0.92      0.84       210
+
+    accuracy                           0.75       300
+   macro avg       0.71      0.63      0.64       300
+weighted avg       0.73      0.75      0.72       300
+

@@ -181,7 +181,7 @@ print("--------------------------------------")
 
 
 # 9. Lưu Mô hình và các Đối tượng tiền xử lý
-OUTPUT_DIR = 'src/saved_models' # Tên thư mục bạn muốn tạo
+OUTPUT_DIR = 'src/RandomForest/saved_models' # Tên thư mục bạn muốn tạo
 os.makedirs(OUTPUT_DIR, exist_ok=True) # Tạo thư mục nếu nó chưa tồn tại
 
 MODEL_FILENAME = os.path.join(OUTPUT_DIR, 'credit_risk_model.pkl')
