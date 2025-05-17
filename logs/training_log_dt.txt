@@ -1,0 +1,16 @@
+--- Báo cáo Huấn luyện Mô hình Decision Tree ---
+
+Accuracy: 0.66
+Confusion Matrix:
+[[ 38  52]
+ [ 50 160]]
+Classification Report:
+              precision    recall  f1-score   support
+
+         bad       0.43      0.42      0.43        90
+        good       0.75      0.76      0.76       210
+
+    accuracy                           0.66       300
+   macro avg       0.59      0.59      0.59       300
+weighted avg       0.66      0.66      0.66       300
+
