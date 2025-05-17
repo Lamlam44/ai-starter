@@ -1,0 +1,16 @@
+--- Báo cáo Huấn luyện Mô hình XGBoost ---
+
+Accuracy: 0.74
+Confusion Matrix:
+[[ 39  51]
+ [ 28 182]]
+Classification Report:
+              precision    recall  f1-score   support
+
+         bad       0.58      0.43      0.50        90
+        good       0.78      0.87      0.82       210
+
+    accuracy                           0.74       300
+   macro avg       0.68      0.65      0.66       300
+weighted avg       0.72      0.74      0.72       300
+
