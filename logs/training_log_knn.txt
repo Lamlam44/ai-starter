@@ -1,0 +1,16 @@
+--- Báo cáo Huấn luyện Mô hình KNN ---
+
+Accuracy: 0.73
+Confusion Matrix:
+[[ 31  59]
+ [ 22 188]]
+Classification Report:
+              precision    recall  f1-score   support
+
+         bad       0.58      0.34      0.43        90
+        good       0.76      0.90      0.82       210
+
+    accuracy                           0.73       300
+   macro avg       0.67      0.62      0.63       300
+weighted avg       0.71      0.73      0.71       300
+
