@@ -1,4 +1,4 @@
-# train_logistic_regression.py
+# train_logistic_regression_with_credit_amount.py
 
 # 1. Import Libraries
 import pandas as pd
@@ -9,17 +9,20 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import joblib
 import os
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-def train_and_evaluate_logistic_regression(DATA_PATH):
+def train_and_evaluate_logistic_regression_with_credit_amount(DATA_PATH):
     """
-    Huấn luyện và đánh giá mô hình Logistic Regression, trả về các chỉ số đánh giá.
+    Huấn luyện và đánh giá mô hình Logistic Regression, bao gồm cả 'Credit amount'
+    và trực quan hóa tầm quan trọng của đặc trưng.
 
     Args:
         DATA_PATH (str): Đường dẫn đến file CSV của tập dữ liệu.
 
     Returns:
         dict or None: Dictionary chứa các chỉ số đánh giá (accuracy, confusion matrix,
-                       classification report) hoặc None nếu có lỗi.
+                     classification report) hoặc None nếu có lỗi.
     """
     try:
         df = pd.read_csv(DATA_PATH)
@@ -27,7 +30,8 @@ def train_and_evaluate_logistic_regression(DATA_PATH):
 
         TARGET_COLUMN_NAME = 'Risk'
         CATEGORICAL_FEATURE_COLUMNS = ['Sex', 'Job', 'Housing', 'Saving accounts', 'Checking account', 'Purpose', 'Telephone', 'Foreign Worker']
-        COLUMNS_TO_DROP_FROM_X = ['Credit amount', TARGET_COLUMN_NAME]
+        # KHÔNG loại bỏ 'Credit amount' nữa
+        COLUMNS_TO_DROP_FROM_X = [TARGET_COLUMN_NAME]
 
         unnamed_col = None
         for col in df.columns:
@@ -80,7 +84,7 @@ def train_and_evaluate_logistic_regression(DATA_PATH):
         X_train[numeric_cols_in_X] = scaler.fit_transform(X_train[numeric_cols_in_X])
         X_test[numeric_cols_in_X] = scaler.transform(X_test[numeric_cols_in_X])
 
-        print("Bắt đầu huấn luyện mô hình Logistic Regression...")
+        print("Bắt đầu huấn luyện mô hình Logistic Regression (bao gồm Credit amount)...")
         model = LogisticRegression(random_state=42, solver='liblinear') # Chọn solver phù hợp
         model.fit(X_train, y_train)
         print("Huấn luyện mô hình hoàn tất.")
@@ -96,28 +100,54 @@ def train_and_evaluate_logistic_regression(DATA_PATH):
         print("Classification Report:\n{class_report}")
         print("--------------------------------------")
 
-        OUTPUT_DIR = 'src/LogisticRegression/saved_models'
+        # --- Feature Importance for Logistic Regression (with Credit amount) ---
+        if hasattr(model, 'coef_'):
+            feature_importance = pd.DataFrame({'Feature': X_train.columns, 'Importance': model.coef_[0]})
+            feature_importance = feature_importance.sort_values(by='Importance', ascending=False)
+            print("\n--- Feature Importance (Logistic Regression with Credit amount) ---")
+            print(feature_importance)
+
+            # Visualize Feature Importance
+            plt.figure(figsize=(10, 6))
+            sns.barplot(x='Importance', y='Feature', data=feature_importance)
+            plt.title('Feature Importance - Logistic Regression (with Credit amount)')
+            plt.xlabel('Coefficient Magnitude')
+            plt.ylabel('Feature')
+            plt.tight_layout()
+            plt.savefig('feature_importance_logistic_regression_with_credit_amount.png') # Save the plot
+            print("\nBiểu đồ Feature Importance đã được lưu thành 'feature_importance_logistic_regression_with_credit_amount.png'")
+        else:
+            print("\nKhông thể trích xuất hệ số (coef_) từ mô hình Logistic Regression.")
+
+        OUTPUT_DIR = 'src/LogisticRegression_with_CreditAmount/saved_models'
         os.makedirs(OUTPUT_DIR, exist_ok=True)
-        joblib.dump(model, os.path.join(OUTPUT_DIR, 'logistic_regression_model.pkl'))
-        joblib.dump(scaler, os.path.join(OUTPUT_DIR, 'scaler_lr.pkl'))
-        joblib.dump(label_encoders, os.path.join(OUTPUT_DIR, 'label_encoders_lr.pkl'))
-        joblib.dump(target_le, os.path.join(OUTPUT_DIR, 'target_encoder_lr.pkl'))
-        joblib.dump(FEATURE_COLUMNS_ORDER, os.path.join(OUTPUT_DIR, 'feature_cols_order_lr.pkl'))
-        joblib.dump(CATEGORICAL_FEATURE_COLUMNS_USED, os.path.join(OUTPUT_DIR, 'categorical_features_used_lr.pkl'))
-        joblib.dump(numeric_cols_in_X, os.path.join(OUTPUT_DIR, 'numeric_features_used_lr.pkl'))
-        joblib.dump(fillna_value, os.path.join(OUTPUT_DIR, 'fillna_value_lr.pkl'))
+        joblib.dump(model, os.path.join(OUTPUT_DIR, 'logistic_regression_model_with_credit_amount.pkl'))
+        joblib.dump(scaler, os.path.join(OUTPUT_DIR, 'scaler_lr_with_credit_amount.pkl'))
+        joblib.dump(label_encoders, os.path.join(OUTPUT_DIR, 'label_encoders_lr_with_credit_amount.pkl'))
+        joblib.dump(target_le, os.path.join(OUTPUT_DIR, 'target_encoder_lr_with_credit_amount.pkl'))
+        joblib.dump(FEATURE_COLUMNS_ORDER, os.path.join(OUTPUT_DIR, 'feature_cols_order_lr_with_credit_amount.pkl'))
+        joblib.dump(CATEGORICAL_FEATURE_COLUMNS_USED, os.path.join(OUTPUT_DIR, 'categorical_features_used_lr_with_credit_amount.pkl'))
+        joblib.dump(numeric_cols_in_X, os.path.join(OUTPUT_DIR, 'numeric_features_used_lr_with_credit_amount.pkl'))
+        joblib.dump(fillna_value, os.path.join(OUTPUT_DIR, 'fillna_value_lr_with_credit_amount.pkl'))
 
         LOG_DIR = 'logs'
         os.makedirs(LOG_DIR, exist_ok=True)
-        LOG_FILENAME = os.path.join(LOG_DIR, 'training_log_lr.txt')
+        LOG_FILENAME = os.path.join(LOG_DIR, 'training_log_lr_with_credit_amount.txt')
 
         with open(LOG_FILENAME, 'w', encoding='utf-8') as f:
-            f.write("--- Báo cáo Huấn luyện Mô hình Logistic Regression ---\n\n")
+            f.write("--- Báo cáo Huấn luyện Mô hình Logistic Regression (bao gồm Credit amount) ---\n\n")
             f.write(f"Accuracy: {accuracy:.2f}\n")
             f.write("Confusion Matrix:\n")
             f.write(np.array_str(conf_matrix) + "\n")
             f.write("Classification Report:\n")
             f.write(class_report + "\n")
+
+            # Add Feature Importance to the log file
+            if hasattr(model, 'coef_'):
+                f.write("\n--- Feature Importance (Logistic Regression with Credit amount) ---\n")
+                f.write(feature_importance.to_string() + "\n")
+            else:
+                f.write("\nKhông thể trích xuất hệ số (coef_) từ mô hình Logistic Regression.\n")
 
         return {
             'accuracy': accuracy,
@@ -134,7 +164,7 @@ def train_and_evaluate_logistic_regression(DATA_PATH):
 
 if __name__ == "__main__":
     DATA_PATH = 'src/german_credit_data (1).csv'
-    evaluation_metrics = train_and_evaluate_logistic_regression(DATA_PATH)
+    evaluation_metrics = train_and_evaluate_logistic_regression_with_credit_amount(DATA_PATH)
     if evaluation_metrics:
         print("\n--- Các chỉ số đánh giá trả về ---")
         print(f"Accuracy: {evaluation_metrics['accuracy']:.2f}")

@@ -6,18 +6,18 @@ import pandas as pd
 import numpy as np
 import joblib
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from train_logistic_regression import train_and_evaluate_logistic_regression
+from train_logistic_regression import train_and_evaluate_logistic_regression_with_credit_amount
 
 # --- Định nghĩa đường dẫn ---
-MODEL_DIR = 'src/LogisticRegression/saved_models'
-MODEL_FILENAME = 'logistic_regression_model.pkl'
-SCALER_FILENAME = 'scaler_lr.pkl'
-ENCODERS_FILENAME = 'label_encoders_lr.pkl'
-TARGET_ENCODER_FILENAME = 'target_encoder_lr.pkl'
-FEATURE_COLUMNS_ORDER_FILENAME = 'feature_cols_order_lr.pkl'
-CATEGORICAL_FEATURE_COLUMNS_USED_FILENAME = 'categorical_features_used_lr.pkl'
-NUMERIC_FEATURE_COLUMNS_USED_FILENAME = 'numeric_features_used_lr.pkl'
-FILLNA_VALUE_FILENAME = 'fillna_value_lr.pkl'
+MODEL_DIR = 'src/LogisticRegression_with_CreditAmount/saved_models'
+MODEL_FILENAME = 'logistic_regression_model_with_credit_amount.pkl'
+SCALER_FILENAME = 'scaler_lr_with_credit_amount.pkl'
+ENCODERS_FILENAME = 'label_encoders_lr_with_credit_amount.pkl'
+TARGET_ENCODER_FILENAME = 'target_encoder_lr_with_credit_amount.pkl'
+FEATURE_COLUMNS_ORDER_FILENAME = 'feature_cols_order_lr_with_credit_amount.pkl'
+CATEGORICAL_FEATURE_COLUMNS_USED_FILENAME = 'categorical_features_used_lr_with_credit_amount.pkl'
+NUMERIC_FEATURE_COLUMNS_USED_FILENAME = 'numeric_features_used_lr_with_credit_amount.pkl'
+FILLNA_VALUE_FILENAME = 'fillna_value_lr_with_credit_amount.pkl'
 DATA_PATH = 'src/german_credit_data (1).csv'
 
 MODEL_PATH = os.path.join(MODEL_DIR, MODEL_FILENAME)
@@ -48,9 +48,9 @@ try:
     CATEGORICAL_FEATURE_COLUMNS_USED = joblib.load(CATEGORICAL_FEATURE_COLUMNS_USED_PATH)
     NUMERIC_FEATURE_COLUMNS_USED = joblib.load(NUMERIC_FEATURE_COLUMNS_USED_PATH)
     fillna_value = joblib.load(FILLNA_VALUE_PATH)
-    print("Đã tải mô hình Logistic Regression và các đối tượng tiền xử lý thành công.")
+    print("Đã tải mô hình Logistic Regression (bao gồm Credit amount) và các đối tượng tiền xử lý thành công.")
 except FileNotFoundError as e:
-    messagebox.showerror("Lỗi Khởi động", f"Không tìm thấy file .pkl: {e.filename}.\nĐảm bảo thư mục 'saved_models' tồn tại và chứa các file này.")
+    messagebox.showerror("Lỗi Khởi động", f"Không tìm thấy file .pkl: {e.filename}.\nĐảm bảo thư mục 'src/LogisticRegression_with_CreditAmount/saved_models' tồn tại và chứa các file này.")
     sys.exit()
 except Exception as e:
     messagebox.showerror("Lỗi Khởi động", f"Lỗi không xác định khi tải file .pkl: {e}")
@@ -67,7 +67,7 @@ JOB_NOTES = ' (chọn: 0-unskilled non-res, 1-unskilled res, 2-skilled, 3-highly
 
 # --- Tạo giao diện ---
 root = tk.Tk()
-root.title("Dự đoán Rủi ro Tín dụng (Logistic Regression)")
+root.title("Dự đoán Rủi ro Tín dụng (Logistic Regression - có Credit amount)")
 
 input_frame = ttk.Frame(root, padding="10")
 input_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
@@ -158,8 +158,8 @@ def on_predict_button_click():
 
 # --- Hàm xử lý khi nhấn nút Huấn luyện Mô hình ---
 def on_train_button_click():
-    messagebox.showinfo("Bắt đầu Huấn luyện", "Quá trình huấn luyện mô hình Logistic Regression đang được tiến hành...")
-    evaluation_metrics = train_and_evaluate_logistic_regression(DATA_PATH)
+    messagebox.showinfo("Bắt đầu Huấn luyện", "Quá trình huấn luyện mô hình Logistic Regression (bao gồm Credit amount) đang được tiến hành...")
+    evaluation_metrics = train_and_evaluate_logistic_regression_with_credit_amount(DATA_PATH)
     if evaluation_metrics:
         accuracy = evaluation_metrics['accuracy']
         conf_matrix_str = np.array_str(evaluation_metrics['confusion_matrix'])
@@ -167,7 +167,7 @@ def on_train_button_click():
 
         # Tạo một cửa sổ mới để hiển thị kết quả đánh giá
         evaluation_window = Toplevel(root)
-        evaluation_window.title("Kết quả Đánh giá Mô hình Logistic Regression")
+        evaluation_window.title("Kết quả Đánh giá Mô hình Logistic Regression (có Credit amount)")
 
         accuracy_label = ttk.Label(evaluation_window, text=f"Accuracy: {accuracy:.2f}")
         accuracy_label.pack(pady=5, padx=10)
@@ -186,7 +186,7 @@ def on_train_button_click():
         class_report_text.config(state=tk.DISABLED)
         class_report_text.pack(pady=5, padx=10)
     else:
-        messagebox.showerror("Lỗi Huấn luyện", "Đã xảy ra lỗi trong quá trình huấn luyện mô hình Logistic Regression.")
+        messagebox.showerror("Lỗi Huấn luyện", "Đã xảy ra lỗi trong quá trình huấn luyện mô hình Logistic Regression (bao gồm Credit amount).")
 
 # --- Tạo nút Dự đoán ---
 predict_button = ttk.Button(root, text="Dự đoán Rủi ro Tín dụng", command=on_predict_button_click)
@@ -197,7 +197,7 @@ result_label = ttk.Label(root, text="Kết quả dự đoán: Chờ nhập liệ
 result_label.grid(row=row_index + 1, column=0, columnspan=3, pady=10)
 
 # --- Tạo nút Huấn luyện Mô hình ---
-train_button = ttk.Button(root, text="Huấn luyện lại Mô hình & Xem Đánh giá", command=on_train_button_click)
+train_button = ttk.Button(root, text="Huấn luyện lại Mô hình & Xem Đánh giá (có Credit amount)", command=on_train_button_click)
 train_button.grid(row=row_index + 2, column=0, columnspan=3, pady=10)
 
 # --- Chạy vòng lặp chính của giao diện ---

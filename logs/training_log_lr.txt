@@ -14,3 +14,14 @@ Classification Report:
    macro avg       0.71      0.63      0.64       300
 weighted avg       0.73      0.75      0.72       300
 
+
+--- Feature Importance (Logistic Regression) ---
+            Feature  Importance
+5  Checking account    0.755194
+4   Saving accounts    0.342643
+1               Sex    0.183924
+0               Age    0.169027
+7           Purpose    0.141110
+2               Job    0.041287
+3           Housing   -0.032808
+6          Duration   -0.465993

@@ -1,0 +1,28 @@
+--- Báo cáo Huấn luyện Mô hình Logistic Regression (bao gồm Credit amount) ---
+
+Accuracy: 0.75
+Confusion Matrix:
+[[ 33  57]
+ [ 18 192]]
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.65      0.37      0.47        90
+           1       0.77      0.91      0.84       210
+
+    accuracy                           0.75       300
+   macro avg       0.71      0.64      0.65       300
+weighted avg       0.73      0.75      0.73       300
+
+
+--- Feature Importance (Logistic Regression with Credit amount) ---
+            Feature  Importance
+5  Checking account    0.754335
+4   Saving accounts    0.351817
+1               Sex    0.193283
+0               Age    0.172208
+8           Purpose    0.129855
+2               Job    0.072244
+3           Housing   -0.035787
+6     Credit amount   -0.169642
+7          Duration   -0.371411
